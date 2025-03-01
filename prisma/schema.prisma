@@ -26,6 +26,7 @@ model Post {
   slug     String
   title    String
   body     String
+  image    Bytes
   author   User   @relation(fields: [authorId], references: [id])
   authorId String @db.ObjectId
 }
