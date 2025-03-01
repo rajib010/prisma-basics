@@ -1,19 +1,34 @@
 import { upload } from "../middleware/multer.js";
 import { Router } from "express";
-import { createPost } from "../controllers/Posts.js";
+import {
+  createPost,
+  updatePost,
+  deletePost,
+  getAllPosts,
+  getPostById,
+} from "../controllers/Posts.js";
 import verifyUser from "../middleware/verifyUser.js";
 
-const postRouter = new Router();
+const postRouter = Router();
 
-postRouter.post("/create",
+postRouter.use(
   verifyUser,
   upload.fields([
     {
       name: "image",
       maxCount: 1,
     },
-  ]),
-  createPost
+  ])
 );
+
+postRouter.get("/get", getAllPosts);
+
+postRouter.get("/get/:id", getPostById);
+
+postRouter.post("/create", createPost);
+
+postRouter.delete("/delete/:id", deletePost);
+
+postRouter.patch("/update/:id", updatePost);
 
 export default postRouter;
